@@ -1,0 +1,38 @@
+<form class="car-details-form">
+    <mat-form-field>
+        <input matInput type="text" #searchBox (keyup)="getCars(searchBox.value)" placeholder="Type to Filter...." />
+        <mat-icon matSuffix>search</mat-icon>
+        <mat-label>{{carItineraries?.length}} cars found</mat-label>
+    </mat-form-field>
+
+    <mat-card class="car-card" *ngFor="let car of carItineraries">
+        <mat-grid-list cols="4">
+            <mat-grid-tile [colspan]="1" [rowspan]="2">
+                <img mat-card-sm-image src="{{car.vehicle.image}}">
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="3" [rowspan]="2">
+                <mat-list role="list">
+                    <mat-list-item role="listitem">{{car.vehicle.type}}</mat-list-item>
+                    <mat-list-item role="listitem">{{car.vehicle.name}}</mat-list-item>
+                    <div class="icon-cantainer">
+                        <mat-icon matSuffix>card_travel</mat-icon>{{car.vehicle.specifications.baggageCapacity}}
+                        <mat-icon matSuffix>account_box</mat-icon> {{car.vehicle.specifications.passengerCapacity}}
+                        <mat-icon matSuffix>shutter_speed</mat-icon> {{car.unlimitedMileage ? 'unlimited miles' : ''}}
+                    </div>
+
+                </mat-list>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="4" [rowspan]="2">
+                <mat-list role="list">
+                    <mat-list-item role="listitem"> free cancllation untill
+                        {{car.cancellationDetails.freeCancellationEndDate | date}}</mat-list-item>
+                    <mat-list-item role="listitem"> 
+                        <span matPrefix>$&nbsp;</span> {{car.fare.perDay}} avg/day</mat-list-item>
+                        <mat-divider></mat-divider>
+                    <mat-list-item role="listitem"> Totla ({{car.fare.totalAmount}} days):<span matPrefix>$&nbsp;</span> {{car.fare.totalAmount * car.fare.perDay}}
+                        </mat-list-item>
+                </mat-list>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </mat-card>
+</form>
